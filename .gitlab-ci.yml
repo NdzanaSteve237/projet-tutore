@@ -6,9 +6,9 @@ stages:
 build:
   stage: build
   script:
-    -echo "Building ..."
-    -mkdir build
-    -touch build/info.txt
+    - echo "Building ..."
+    - mkdir build
+    - touch build/info.txt
   artifacts:
     paths:
       - build/
@@ -16,8 +16,8 @@ build:
 test:
   stage: test
   script:
-    -echo "testing ..."
-    -test -f "building/info.txt"
+    - echo "testing ..."
+    - test -f "building/info.txt"
 
 deploy:
   stage: deploy
