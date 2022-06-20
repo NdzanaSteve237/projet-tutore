@@ -1,0 +1,19 @@
+- chercher un candidat par email
+- chercher un candidat par son matricule
+- chercher un étudiant par son addresse email
+- chercher un candidat par sms
+- chercher un anonymat par son numéro
+- chercher la liste des notes de l'évaluation passé en paramètre
+- fonction qui retourner la liste des inscrits par rapport à un enseignement
+- fonction qui cherhche la liste des évaluations par rapport à une évaluation précise
+- fonctioin qui cherche une filière à partir de son libelle
+- chercher un semestre à partir de son libelle et de son année académique
+- chercher une année académique à partir d'une partir d'un date
+- retrouver note à partir de est inscrit et de l'évaluation 
+- chercher la note de cc d'un candidat et du type de note de cc
+- chercher une spécialité à partir de son libéllé et de la filière
+- chercher un enseignement à partir de son libéllé ,le code de l'ue et l'année de début
+- chercher un type évaluation à partir de son libellé, du code de la matière et de l'année
+- chercher un cc  à partir de l'enseignement et le numéro de cc
+- chercher le code de est inscrit à partir du matricule, de l'année et du code de l'UE
+- ok
