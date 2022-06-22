@@ -3,26 +3,24 @@ stages:
   - test
   - deploy
 
-build:
+
+build_a:
   stage: build
   script:
-    - echo "Building ..."
-    - mkdir build
-    - touch build/info.txt
-  artifacts:
-    paths:
-      - build/
+    - echo "This job builds something."
 
-test:
+
+
+test_a:
   stage: test
   script:
-    - echo "testing ..."
-    - test -f "building/info.txt"
+    - echo "This job tests something. It will only run when all jobs in the"
+    - echo "build stage are complete."
 
-deploy:
+
+deploy_a:
   stage: deploy
-  image: maven:3.6-jdk-11
   script:
-    - 'mvn deploy -s ci_settings.xml'
-  only:
-    - main
+    - echo "This job deploys something. It will only run when all jobs in the"
+    - echo "test stage complete."
+
