@@ -22,7 +22,8 @@ test_a:
     - echo "This job tests something. It will only run when all jobs in the"
     - echo "build stage are complete."
     - test -f "building/info.txt"
-
+include:
+  - template: Code-Quality.gitlab-ci.yml
 
 deploy_a:
   stage: deploy
