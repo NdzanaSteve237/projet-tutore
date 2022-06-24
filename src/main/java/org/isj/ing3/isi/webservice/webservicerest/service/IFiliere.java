@@ -12,8 +12,6 @@ public interface IFiliere {
     List<Filiere> listFilieres();
     int deleteFiliere(Long code);
     Filiere getFiliereByCode(Long code) throws IsjException;
-    int updateFiliere (Filiere filiere) throws IsjException;
-
 
     List<Filiere> getFiliereByLibelleFiliere(String libelleFiliere) throws IsjException;
 }

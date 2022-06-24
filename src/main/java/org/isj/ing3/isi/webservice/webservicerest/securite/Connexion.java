@@ -239,7 +239,30 @@ public class Connexion {
      *
 
      */
+    public void listerDroits() {
+        // UtilisateurFacade uf = new UtilisateurFacade();
+        Utilisateur utilisateur = utilisateurCourant;
+        List<Role> roles = utilisateur.getRoles();
+        for (int i = 0; i < roles.size(); i++) {
+            System.out.println(roles.get(i).getLibelle());
+            List<Droit> droits = roles.get(i).getDroits();
+            for (int j = 0; j < droits.size(); j++) {
+                System.out.println(droits.get(j).toString());
+            }
+        }
+    }
 
+    /**
+     * Fonction qui permet de creer un role en fonction du libellé et de la description
+     *
+     * @param libelle     comment on appelle le role
+     * @param description comment ou de quoi est constitué le role
+     */
+    public void enregistrerRole(String libelle, String description) {
+        /*RoleFacade r = new RoleFacade();
+        r.enregistrer(libelle, description);*/
+
+    }
 
     int tableau[] = new int[4];
 
@@ -258,5 +281,16 @@ public class Connexion {
        //ajouter un rôle un à un user
     }
 
+    /**
+     * fonction permettant de creer un role avec ses droits
+     *
+     * @param d liste des droits
+     * @param role le role de l'utilisateur
+     */
+    public void creerRole(List<Droit> d, Role role) {
+        for (int i = 0; i < d.size(); i++) {
+            d.get(i).setRole(role);
+        }
+    }
 }
 

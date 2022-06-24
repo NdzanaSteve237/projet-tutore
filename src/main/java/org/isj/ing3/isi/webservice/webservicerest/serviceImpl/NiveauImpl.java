@@ -10,13 +10,10 @@ import org.isj.ing3.isi.webservice.webservicerest.repositories.UtilisateurReposi
 import org.isj.ing3.isi.webservice.webservicerest.service.INiveau;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.zalando.problem.Status;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Transactional
 @Service
 public class NiveauImpl implements INiveau {
     @Autowired
@@ -28,28 +25,11 @@ public class NiveauImpl implements INiveau {
     public int saveNiveau(Niveau niveau) throws IsjException{
 
         Utilisateur createur = utilisateurRepository.findById(niveau.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-        Utilisateur modificateur = createur;
-        niveau.setCreateur(createur);
-        niveau.setModificateur(modificateur);
-        Niveau niveauSave = niveauRepository.save(niveau);
-        if (niveauSave == null) {
-            throw new IsjException("Un problème est survenu lors de l'enregistrement, veuillez réessayer plus tard", Status.INTERNAL_SERVER_ERROR);
-        }
-        return niveauSave.getCode().intValue();
-
-    }
-
-    @Override
-    public int updateNiveau (Niveau niveau) throws IsjException {
-        Utilisateur createur = utilisateurRepository.findById(niveau.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
         Utilisateur modificateur = utilisateurRepository.findById(niveau.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
         niveau.setCreateur(createur);
         niveau.setModificateur(modificateur);
-        Niveau niveauUpdate = niveauRepository.save(niveau);
-        if (niveauUpdate == null) {
-            throw new IsjException("Un problème est survenu lors de la mise à jour, veuillez réessayer plus tard", Status.INTERNAL_SERVER_ERROR);
-        }
-        return niveauUpdate.getCode().intValue();
+
+        return niveauRepository.save(niveau).getCode().intValue();
     }
 
     @Override

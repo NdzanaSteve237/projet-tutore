@@ -12,14 +12,11 @@ import org.isj.ing3.isi.webservice.webservicerest.repositories.UtilisateurReposi
 import org.isj.ing3.isi.webservice.webservicerest.service.INoteCC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.zalando.problem.Status;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Transactional
 @Service
 public class NoteCCServiceImpl implements INoteCC {
     @Autowired
@@ -31,7 +28,7 @@ public class NoteCCServiceImpl implements INoteCC {
     public int saveNoteCC(NoteCC noteCC) throws IsjException{
 
         Utilisateur createur = utilisateurRepository.findById(noteCC.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-        Utilisateur modificateur = createur;
+        Utilisateur modificateur = utilisateurRepository.findById(noteCC.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
         noteCC.setCreateur(createur);
         noteCC.setModificateur(modificateur);
 
@@ -40,8 +37,8 @@ public class NoteCCServiceImpl implements INoteCC {
 
     @Override
     public List<NoteCC> listNoteCC() {
-        List<NoteCC> noteCC = noteCCRepository.findAll();
-        return noteCC;
+        List<NoteCC> noteCCDtos = noteCCRepository.findAll();
+        return noteCCDtos;
     }
 
     @Override
@@ -52,23 +49,12 @@ public class NoteCCServiceImpl implements INoteCC {
 
     @Override
     public NoteCC getNoteCCByCode(Long code) throws IsjException {
-        return noteCCRepository.findById(code).orElseThrow(() -> new IsjException("NoteCC introuvable" , Status.NOT_FOUND));
+        return noteCCRepository.findById(code).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
     }
 
     @Override
     public NoteCC searchNoteCCByCandidatOrTypeNoteCC(Candidat candidat, TypeNoteCC typeNoteCC) {
         return noteCCRepository.retrouverNoteCC(candidat,typeNoteCC);
     }
-
-    @Override
-    public int updateNoteCC(NoteCC noteCC) throws IsjException {
-        Utilisateur createur = utilisateurRepository.findById(noteCC.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-        Utilisateur modificateur = utilisateurRepository.findById(noteCC.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-        noteCC.setCreateur(createur);
-        noteCC.setModificateur(modificateur);
-        return noteCCRepository.save(noteCC).getCode().intValue();
-    }
-
-
 }
 

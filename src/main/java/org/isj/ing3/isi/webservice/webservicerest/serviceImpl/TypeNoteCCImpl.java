@@ -2,7 +2,6 @@ package org.isj.ing3.isi.webservice.webservicerest.serviceImpl;
 
 import org.isj.ing3.isi.webservice.webservicerest.exception.ErrorInfo;
 import org.isj.ing3.isi.webservice.webservicerest.exception.IsjException;
-import org.isj.ing3.isi.webservice.webservicerest.model.entities.Enseignement;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.TypeNoteCC;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Utilisateur;
 import org.isj.ing3.isi.webservice.webservicerest.repositories.TypeNoteCCRepository;
@@ -11,10 +10,7 @@ import org.isj.ing3.isi.webservice.webservicerest.service.ITypeNoteCC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
-
-@Transactional
 @Service
 
 public class TypeNoteCCImpl implements ITypeNoteCC {
@@ -25,11 +21,11 @@ public class TypeNoteCCImpl implements ITypeNoteCC {
 
     @Override
     public Long saveTypeNoteCC(TypeNoteCC typeNoteCC) throws IsjException {
-        Utilisateur createur = utilisateurRepository.findById(typeNoteCC.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-        Utilisateur modificateur = createur;
+        Utilisateur createur = utilisateurRepository.findById(typeNoteCC.getCreateur().getCode()).get();
+        Utilisateur modificateur = utilisateurRepository.findById(typeNoteCC.getCreateur().getCode()).get();
+
         typeNoteCC.setCreateur(createur);
         typeNoteCC.setModificateur(modificateur);
-
         return typeNoteCCRepository.save(typeNoteCC).getCode();
     }
 
@@ -42,20 +38,5 @@ public class TypeNoteCCImpl implements ITypeNoteCC {
     public int deleteTypeNoteCC(Long code) throws IsjException {
         typeNoteCCRepository.deleteById(typeNoteCCRepository.findById(code).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND)).getCode());
         return 1;
-    }
-
-    @Override
-    public TypeNoteCC searchTypeNoteCCByEnseignementOrNumero_CC(Enseignement enseignement, int numero_cc) throws IsjException {
-        return typeNoteCCRepository.retrouverTypeNoteCC(enseignement,numero_cc );
-    }
-
-    @Override
-    public Long updateTypeNoteCC(TypeNoteCC typeNoteCC) throws IsjException {
-        Utilisateur createur = utilisateurRepository.findById(typeNoteCC.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-        Utilisateur modificateur = utilisateurRepository.findById(typeNoteCC.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-
-        typeNoteCC.setCreateur(createur);
-        typeNoteCC.setModificateur(modificateur);
-        return typeNoteCCRepository.save(typeNoteCC).getCode();
     }
 }

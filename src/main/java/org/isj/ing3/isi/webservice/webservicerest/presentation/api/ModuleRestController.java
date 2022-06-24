@@ -7,7 +7,6 @@ import org.isj.ing3.isi.webservice.webservicerest.model.entities.Module;
 import org.isj.ing3.isi.webservice.webservicerest.service.IAnonymat;
 import org.isj.ing3.isi.webservice.webservicerest.service.IModule;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,35 +21,22 @@ public class ModuleRestController {
 	private IModule iModule;
 
 	@PostMapping("/save")
-	public String enregistrer(@RequestBody Module create) throws IsjException {
-
-		try {
-			iModule.saveModule(create);
-		}catch (IsjException exception) {
-			return exception.getMessage();
-		}
-
-		return "Enregistrement réussi";
-
+	public void enregistrer(@RequestBody Module create) throws IsjException {
+		iModule.saveModule(create);
 	}
 
 
 	@GetMapping("/{code}/data")
-	public ResponseEntity<?> getModuleByCode(@PathVariable("code") Long code) throws IsjException {
+	public ResponseEntity<Module> getModuleByCode(@PathVariable("code") Long code) throws IsjException {
 
-		try {
-			return ResponseEntity.ok(iModule.getModuleByCode(code));
-		}catch (IsjException exception) {
-			return new ResponseEntity<String>(exception.getMessage(), HttpStatus.NOT_FOUND);
-		}
-
+		return ResponseEntity.ok(iModule.getModuleByCode(code));
 	}
+
 
 	@GetMapping("/all")
 	public ResponseEntity<List<Module>> getAllModule() {
 		return ResponseEntity.ok(iModule.listModules());
 	}
-
 
 	@GetMapping("/{code}/delete")
 	public int deteleModule(@PathVariable("code") Long code) throws IsjException {
@@ -58,14 +44,8 @@ public class ModuleRestController {
 	}
 
 	@GetMapping("/{codeModule}/search")
-	public ResponseEntity<?> getModuleByCodeModule(@PathVariable("codeModule") String codeModule) throws IsjException {
-
-		try {
-			return ResponseEntity.ok(iModule.getModuleByCodeModule(codeModule));
-		}catch (IsjException exception) {
-			return new ResponseEntity<String>(exception.getMessage(), HttpStatus.NOT_FOUND);
-		}
-
+	public ResponseEntity<List<Module>> getModuleByCodeModule(@PathVariable("codeModule") String codeModule) throws IsjException {
+		return ResponseEntity.ok(iModule.getModuleByCodeModule(codeModule));
 	}
 
 }

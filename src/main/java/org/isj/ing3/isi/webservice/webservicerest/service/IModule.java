@@ -12,6 +12,6 @@ public interface IModule {
     List<Module> listModules();
     int deleteModule(Long code) throws IsjException;
     Module getModuleByCode(Long code) throws IsjException;
-    int updateModule (Module module) throws IsjException;
+
     List<Module> getModuleByCodeModule(String codeModule) throws IsjException;
 }

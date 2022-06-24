@@ -10,12 +10,10 @@ import org.isj.ing3.isi.webservice.webservicerest.service.ISpecialite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Transactional
 @Service
 public class SpecialiteImpl implements ISpecialite {
     @Autowired
@@ -24,9 +22,10 @@ public class SpecialiteImpl implements ISpecialite {
     UtilisateurRepository utilisateurRepository;
 
     @Override
-    public Long saveSpecialite(Specialite specialiteDto) throws IsjException {
-        Utilisateur createur = utilisateurRepository.findById(specialiteDto.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-        Utilisateur modificateur = createur;
+    public Long saveSpecialite(Specialite specialiteDto) {
+        Utilisateur createur = utilisateurRepository.findById(specialiteDto.getCreateur().getCode()).get();
+        Utilisateur modificateur = utilisateurRepository.findById(specialiteDto.getCreateur().getCode()).get();
+
         specialiteDto.setCreateur(createur);
         specialiteDto.setModificateur(modificateur);
         return specialiteRepository.save(specialiteDto).getCode();
@@ -47,15 +46,5 @@ public class SpecialiteImpl implements ISpecialite {
     @Override
     public Specialite searchSpecialiteBySpecialiteOrfiliere (String specialite, String filiere) {
         return specialiteRepository.retrouverSpecialite(specialite,filiere );
-    }
-
-    @Override
-    public Long updateSpecialite(Specialite specialiteDto) throws IsjException {
-        Utilisateur createur = utilisateurRepository.findById(specialiteDto.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-        Utilisateur modificateur = utilisateurRepository.findById(specialiteDto.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-
-        specialiteDto.setCreateur(createur);
-        specialiteDto.setModificateur(modificateur);
-        return specialiteRepository.save(specialiteDto).getCode();
     }
 }

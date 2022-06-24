@@ -12,6 +12,6 @@ public interface INiveau {
     List<Niveau> listNiveaus();
     int deleteNiveau(Long code) throws IsjException;
     Niveau getNiveauByCode(Long code) throws IsjException;
-    int updateNiveau (Niveau niveau) throws IsjException;
+
     List<Niveau> getNiveauByNumero(long niveau) throws IsjException;
 }

@@ -4,7 +4,6 @@ import org.isj.ing3.isi.webservice.webservicerest.exception.IsjException;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Role;
 import org.isj.ing3.isi.webservice.webservicerest.service.IRole;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,14 +16,8 @@ public class RoleRestController {
     private IRole iRole;
 
     @PostMapping("/save")
-    public String enregistrer(@RequestBody Role create) throws IsjException {
-        try {
-            iRole.saveRole(create);
-        }catch (IsjException exception) {
-            return exception.getMessage();
-        }
-
-        return "enregistrement reussi";
+    public void enregistrer(@RequestBody Role create) {
+        iRole.saveRole(create);
     }
 
     @GetMapping("/all")
@@ -33,22 +26,7 @@ public class RoleRestController {
     }
 
     @GetMapping("/{code}/delete")
-    public ResponseEntity<?> deteleRole(@PathVariable("code") Long code) throws IsjException {
-        try {
-            return ResponseEntity.ok(iRole.deleteRoleByCode(code));
-        }catch (IsjException exception) {
-            return new ResponseEntity<String>(exception.getMessage(), HttpStatus.NOT_FOUND);
-        }
-
-    }
-    @PostMapping("/update")
-    public String modifier(@RequestBody Role create) throws IsjException {
-        try {
-            iRole.updateRole(create);
-        }catch (IsjException exception) {
-            return exception.getMessage();
-        }
-
-        return "modification reussi";
+    public int deteleRole(@PathVariable("code") Long code) throws IsjException {
+        return iRole.deleteRoleByCode(code);
     }
 }

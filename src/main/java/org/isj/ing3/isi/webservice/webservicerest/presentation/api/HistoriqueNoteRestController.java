@@ -6,7 +6,6 @@ import org.isj.ing3.isi.webservice.webservicerest.model.entities.HistoriqueNote;
 import org.isj.ing3.isi.webservice.webservicerest.service.IAnonymat;
 import org.isj.ing3.isi.webservice.webservicerest.service.IHistoriqueNote;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,27 +20,15 @@ public class HistoriqueNoteRestController {
 	private IHistoriqueNote iHistoriqueNote;
 
 	@PostMapping("/save")
-	public String enregistrer(@RequestBody HistoriqueNote create) throws IsjException {
-
-		try {
-			iHistoriqueNote.saveHistoriqueNote(create);
-		}catch (IsjException exception) {
-			return exception.getMessage();
-		}
-		return "Enregistrement réussi";
-
+	public void enregistrer(@RequestBody HistoriqueNote create) throws IsjException {
+		iHistoriqueNote.saveHistoriqueNote(create);
 	}
 
 
 	@GetMapping("/{code}/data")
-	public ResponseEntity<?> getHistoriqueNoteByCode(@PathVariable("code") Long code) throws IsjException {
+	public ResponseEntity<HistoriqueNote> getHistoriqueNoteByCode(@PathVariable("code") Long code) throws IsjException {
 
-		try {
-			return ResponseEntity.ok(iHistoriqueNote.getHistoriqueNoteByCode(code));
-		}catch (IsjException exception) {
-			return new ResponseEntity<String>(exception.getMessage(), HttpStatus.NOT_FOUND);
-		}
-
+		return ResponseEntity.ok(iHistoriqueNote.getHistoriqueNoteByCode(code));
 	}
 
 

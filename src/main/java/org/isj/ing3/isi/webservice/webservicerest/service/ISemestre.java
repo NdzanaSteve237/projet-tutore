@@ -8,10 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ISemestre {
-    Long saveSemestre(Semestre semestre) throws IsjException;
+    Long saveSemestre(Semestre semestreDto);
     List<Semestre> listSemestre();
     int deleteSemestreByCode(Long code) throws IsjException;
     Semestre searchSemestreByLibelleOrAnneeAcademique(String libelle, AnneeAcademique anneeAcademique) throws IsjException;
-    Long updateSemestre(Semestre semestre) throws IsjException;
-
 }
