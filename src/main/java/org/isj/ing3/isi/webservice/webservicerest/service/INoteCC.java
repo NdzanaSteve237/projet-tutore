@@ -14,4 +14,6 @@ public interface INoteCC {
     int deleteNoteCC(Long code) throws IsjException;
     NoteCC getNoteCCByCode(Long code) throws IsjException;
     NoteCC searchNoteCCByCandidatOrTypeNoteCC(Candidat candidat, TypeNoteCC typeNoteCC) throws IsjException;
+    int updateNoteCC(NoteCC noteCC) throws IsjException;
+
 }

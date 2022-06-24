@@ -48,11 +48,13 @@ public class FiliereRestController {
 
 	@GetMapping("/all")
 	public ResponseEntity<List<Filiere>> getAllFiliere() {
+
 		return ResponseEntity.ok(iFiliere.listFilieres());
 	}
 
 	@GetMapping("/{code}/delete")
-	public int deteleFiliere(@PathVariable("code") Long code){
+	public int deteleFiliere(@PathVariable("code") Long code)
+	{
 		return iFiliere.deleteFiliere(code);
 	}
 

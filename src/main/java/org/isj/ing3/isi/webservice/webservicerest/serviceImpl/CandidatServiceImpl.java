@@ -31,9 +31,9 @@ public class CandidatServiceImpl implements ICandidat {
 
         CHeckNull.checkStringIsNull(candidat.getEmail());
         checkEmailsAlreadyUsed(candidat.getEmail());
-        Utilisateur createur = utilisateurRepository.findById(candidat.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
-        Utilisateur modificateur = utilisateurRepository.findById(candidat.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
-        Classe classe = classeRepository.findById(candidat.getClasse().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
+        Utilisateur createur = utilisateurRepository.findById(candidat.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
+        Utilisateur modificateur = createur;
+        Classe classe = classeRepository.findById(candidat.getClasse().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
         candidat.setClasse(classe);
         candidat.setCreateur(createur);
         candidat.setModificateur(modificateur);
@@ -60,6 +60,24 @@ public class CandidatServiceImpl implements ICandidat {
     @Override
     public void deleteByEmail(String email) {
 
+    }
+
+    @Override
+    public Candidat searchCandidatBytelephone(int telephone) throws IsjException {
+        return candidatRepository.retrouverCandidatSms(telephone);
+    }
+
+    @Override
+    public int updateCandidat(Candidat candidat) throws IsjException {
+        CHeckNull.checkStringIsNull(candidat.getEmail());
+        checkEmailsAlreadyUsed(candidat.getEmail());
+        Utilisateur createur = utilisateurRepository.findById(candidat.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
+        Utilisateur modificateur = utilisateurRepository.findById(candidat.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
+        Classe classe = classeRepository.findById(candidat.getClasse().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
+        candidat.setClasse(classe);
+        candidat.setCreateur(createur);
+        candidat.setModificateur(modificateur);
+        return candidatRepository.save(candidat).getCode().intValue();
     }
 
     private void checkEmailsAlreadyUsed(String email) throws IsjException {

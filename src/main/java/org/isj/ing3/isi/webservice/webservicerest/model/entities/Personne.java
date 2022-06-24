@@ -3,6 +3,8 @@ package org.isj.ing3.isi.webservice.webservicerest.model.entities;
  * importation des classes
  */
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.isj.ing3.isi.webservice.webservicerest.utils.enumaration.Sexe;
@@ -20,6 +22,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @MappedSuperclass
+
 public class Personne extends Securite {
 
     @Column(name = "nom", nullable = false)

@@ -5,6 +5,7 @@ import org.isj.ing3.isi.webservice.webservicerest.model.entities.AnneeAcademique
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Semestre;
 import org.isj.ing3.isi.webservice.webservicerest.service.ISemestre;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,14 @@ public class SemestreRestController {
     private ISemestre iSemestre;
 
     @PostMapping("/save")
-    public void enregistrer(@RequestBody Semestre create) {
-        iSemestre.saveSemestre(create);
+    public String enregistrer(@RequestBody Semestre create) {
+        try {
+            iSemestre.saveSemestre(create);
+        }catch (IsjException exception) {
+            return exception.getMessage();
+        }
+        return "enregistrement reussi";
+
     }
 
     @GetMapping("/all")
@@ -27,11 +34,32 @@ public class SemestreRestController {
     }
 
     @GetMapping("/{code}/delete")
-    public int deteleSemestre(@PathVariable("code") Long code) throws IsjException {
-        return iSemestre.deleteSemestreByCode(code);
+    public ResponseEntity<?> deteleSemestre(@PathVariable("code") Long code) throws IsjException {
+        try {
+            return ResponseEntity.ok(iSemestre.deleteSemestreByCode(code));
+        }catch (IsjException exception) {
+            return new ResponseEntity<String>(exception.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
     }
     @GetMapping("/{libelle}/{annee_academique}/recherche")
-    public ResponseEntity<Semestre> searchSemestreByLibelleOrAnneeAcademique (@PathVariable("libelle") String libelle, @PathVariable("annee_academique")AnneeAcademique annee_academique ) throws IsjException {
-        return ResponseEntity.ok(iSemestre.searchSemestreByLibelleOrAnneeAcademique(libelle,annee_academique));
+    public ResponseEntity<?> searchSemestreByLibelleOrAnneeAcademique (@PathVariable("libelle") String libelle, @PathVariable("annee_academique")AnneeAcademique annee_academique ) throws IsjException {
+        try {
+            return ResponseEntity.ok(iSemestre.searchSemestreByLibelleOrAnneeAcademique(libelle,annee_academique));
+        }catch (IsjException exception) {
+            return new ResponseEntity<String>(exception.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
+    }
+    @PostMapping("/update")
+    public String modifier(@RequestBody Semestre create) {
+        try {
+            iSemestre.updateSemestre(create);
+        }catch (IsjException exception) {
+            return exception.getMessage();
+        }
+
+        return "modification reussi";
+
     }
 }

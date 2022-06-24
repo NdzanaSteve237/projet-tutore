@@ -10,9 +10,11 @@ import org.isj.ing3.isi.webservice.webservicerest.service.ISms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Transactional
 @Service
 public class SmsImpl implements ISms {
     @Autowired
@@ -21,10 +23,9 @@ public class SmsImpl implements ISms {
     UtilisateurRepository utilisateurRepository;
 
     @Override
-    public Long saveSms(Sms sms) {
-        Utilisateur createur = utilisateurRepository.findById(sms.getCreateur().getCode()).get();
-        Utilisateur modificateur = utilisateurRepository.findById(sms.getCreateur().getCode()).get();
-
+    public Long saveSms(Sms sms) throws IsjException {
+        Utilisateur createur = utilisateurRepository.findById(sms.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
+        Utilisateur modificateur = createur;
         sms.setCreateur(createur);
         sms.setModificateur(modificateur);
         return  smsRepository.save(sms).getCode();
@@ -39,5 +40,15 @@ public class SmsImpl implements ISms {
     public int deleteSmsByCode(Long code) throws IsjException {
         smsRepository.deleteById(smsRepository.findById(code).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND)).getCode());
         return 1;
+    }
+
+    @Override
+    public Long updateSms(Sms sms) throws IsjException {
+        Utilisateur createur = utilisateurRepository.findById(sms.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
+        Utilisateur modificateur = utilisateurRepository.findById(sms.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
+
+        sms.setCreateur(createur);
+        sms.setModificateur(modificateur);
+        return smsRepository.save(sms).getCode();
     }
 }

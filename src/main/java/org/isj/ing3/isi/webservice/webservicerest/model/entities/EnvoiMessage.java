@@ -4,6 +4,8 @@ package org.isj.ing3.isi.webservice.webservicerest.model.entities;
  * importation des classes
  */
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +23,9 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 @Table(name = "envoi_message")
+
 public class EnvoiMessage extends Securite implements Serializable {
 
     @Column(name = "date_envoi")

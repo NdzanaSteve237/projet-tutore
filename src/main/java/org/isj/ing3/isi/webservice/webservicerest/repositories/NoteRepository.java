@@ -18,4 +18,55 @@ public interface NoteRepository extends JpaRepository<Note, Long> {
     @Query(value = "select * from note limit 5", nativeQuery = true)
     List<Note>  listeNotes();
 
+    @Query (value = "select * from note " +
+            "where code in (select note.code\n" +
+            "from note\n" +
+            "         inner join evaluation on note.evaluation=evaluation.code\n" +
+            "         inner join type_evaluation on evaluation.type_evaluation=type_evaluation.code\n" +
+            "         inner join est_inscrit on note.est_inscrit=est_inscrit.code\n" +
+            "         inner join candidat on est_inscrit.candidat_inscrit=candidat.code\n" +
+            "         inner join etudiant on candidat.code=etudiant.code\n" +
+            "         inner join enseignement on type_evaluation.enseignement=enseignement.code\n" +
+            "         inner join ue on enseignement.ue=ue.code\n" +
+            "         inner join module on ue.module=module.code\n" +
+            "         inner join niveau on ue.niveau=niveau.code\n" +
+            "         inner join specialite on ue.specialite=specialite.code\n" +
+            "         inner join filiere on specialite.filiere=filiere.code\n" +
+            "         inner join semestre on enseignement.semestre=semestre.code\n" +
+            "         inner join annee_academique on semestre.annee_academique=annee_academique.code\n" +
+            " where filiere.libelle=:libellefiliere\n" +
+            "  and specialite.libelle=:libellespecialite\n" +
+            "  and niveau.numero=:numero\n" +
+            "  and extract(year from annee_academique.date_debut)=:anneDebut\n" +
+            "  and semestre.libelle=:sem\n" +
+            "and type_evaluation.libelle=:typeNot\n" +
+            "and ue.code_ue=:codeUe\n" +
+            "order by candidat.nom) ", nativeQuery = true)
+    List<Note> listNotesByFiliereAndSpecialiteAndNiveauAndAnneDebutAndSemestreAndTypeEvaluationAndUeOrderByCandidat(@Param("libellefiliere") String libellefiliere, @Param("libellespecialite") String libellespecialite, @Param("numero") int numero, @Param("anneDebut") int anneDebut, @Param("sem") String libelleSemestre, @Param("typeNot") String libelleTypeNote, @Param("codeUe") String codeUe);
+
+    @Query (value = "select * from note " +
+            "where code in (select note.code\n" +
+            "from note\n" +
+            "         inner join evaluation on note.evaluation=evaluation.code\n" +
+            "         inner join type_evaluation on evaluation.type_evaluation=type_evaluation.code\n" +
+            "         inner join est_inscrit on note.est_inscrit=est_inscrit.code\n" +
+            "         inner join candidat on est_inscrit.candidat_inscrit=candidat.code\n" +
+            "         inner join etudiant on candidat.code=etudiant.code\n" +
+            "         inner join enseignement on type_evaluation.enseignement=enseignement.code\n" +
+            "         inner join ue on enseignement.ue=ue.code\n" +
+            "         inner join module on ue.module=module.code\n" +
+            "         inner join niveau on ue.niveau=niveau.code\n" +
+            "         inner join specialite on ue.specialite=specialite.code\n" +
+            "         inner join filiere on specialite.filiere=filiere.code\n" +
+            "         inner join semestre on enseignement.semestre=semestre.code\n" +
+            "         inner join annee_academique on semestre.annee_academique=annee_academique.code\n" +
+            " where filiere.libelle=:libellefiliere\n" +
+            "  and specialite.libelle=:libellespecialite\n" +
+            "  and niveau.numero=:numero\n" +
+            "  and extract(year from annee_academique.date_debut)=:anneDebut\n" +
+            "order by candidat.nom) ", nativeQuery = true)
+    List<Note> listNotesByFiliereAndSpecialiteAndNiveauAndAnneDebutOrderByCandidat(@Param("libellefiliere") String libellefiliere, @Param("libellespecialite") String libellespecialite, @Param("numero") int numero, @Param("anneDebut") int anneDebut);
+
+
+
 }

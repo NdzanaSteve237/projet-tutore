@@ -5,6 +5,7 @@ import org.isj.ing3.isi.webservice.webservicerest.model.entities.Sms;
 import org.isj.ing3.isi.webservice.webservicerest.service.ISession;
 import org.isj.ing3.isi.webservice.webservicerest.service.ISms;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,15 @@ public class SmsRestController {
     private ISms iSms;
 
     @PostMapping("/save")
-    public void enregistrer(@RequestBody Sms create) {
-        iSms.saveSms(create);
+    public String enregistrer(@RequestBody Sms create) {
+        try {
+            iSms.saveSms(create);
+        }catch (IsjException exception) {
+            return exception.getMessage();
+        }
+
+        return "enregistrement reussi";
+
     }
 
     @GetMapping("/all")
@@ -28,7 +36,23 @@ public class SmsRestController {
     }
 
     @GetMapping("/{code}/delete")
-    public int deteleSms(@PathVariable("code") Long code) throws IsjException {
-        return iSms.deleteSmsByCode(code);
+    public ResponseEntity<?> deteleSms(@PathVariable("code") Long code) throws IsjException {
+        try {
+            return ResponseEntity.ok(iSms.deleteSmsByCode(code));
+        }catch (IsjException exception) {
+            return new ResponseEntity<String>(exception.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
+    }
+    @PostMapping("/update")
+    public String modifier(@RequestBody Sms create) {
+        try {
+            iSms.updateSms(create);
+        }catch (IsjException exception) {
+            return exception.getMessage();
+        }
+
+        return "modification reussi";
+
     }
 }

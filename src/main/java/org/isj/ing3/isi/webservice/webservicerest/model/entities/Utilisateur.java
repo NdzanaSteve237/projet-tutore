@@ -4,6 +4,11 @@ package org.isj.ing3.isi.webservice.webservicerest.model.entities;
  * importation des classes
  */
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.isj.ing3.isi.webservice.webservicerest.utils.enumaration.Sexe;
 import org.isj.ing3.isi.webservice.webservicerest.utils.enumaration.Statut;
 
@@ -21,7 +26,11 @@ import java.util.Objects;
  */
 
 @Entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 @Table(name = "utilisateur")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Utilisateur extends Personne implements Serializable {
 
 
@@ -39,32 +48,6 @@ public class Utilisateur extends Personne implements Serializable {
         super(libelle, description, nom, prenom, email, telephone, dateNaissance, sexe, statut);
         this.login = login;
         this.motDePasse = motDePasse;
-    }
-
-
-    public Utilisateur(){}
-
-    public String getLogin() {
-        return login;
-    }
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getMotDePasse() {
-        return motDePasse;
-    }
-
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
     }
 
     @Override

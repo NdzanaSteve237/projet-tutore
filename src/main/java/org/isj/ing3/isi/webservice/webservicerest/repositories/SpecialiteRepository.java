@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface SpecialiteRepository extends JpaRepository<Specialite, Long> {
     @Query(value = "SELECT * FROM Specialite sp WHERE sp.libelle=:specialite and sp.filiere.libelle=:filiere", nativeQuery = true)
     public Specialite retrouverSpecialite(@Param("specialite")String specialite, @Param("filiere")String filiere);
+
 }

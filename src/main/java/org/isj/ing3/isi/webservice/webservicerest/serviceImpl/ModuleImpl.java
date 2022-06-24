@@ -10,10 +10,13 @@ import org.isj.ing3.isi.webservice.webservicerest.repositories.UtilisateurReposi
 import org.isj.ing3.isi.webservice.webservicerest.service.IModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.zalando.problem.Status;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Transactional
 @Service
 public class ModuleImpl implements IModule {
     @Autowired
@@ -25,11 +28,28 @@ public class ModuleImpl implements IModule {
     public int saveModule(Module module) throws IsjException{
 
         Utilisateur createur = utilisateurRepository.findById(module.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
+        Utilisateur modificateur = createur;
+        module.setCreateur(createur);
+        module.setModificateur(modificateur);
+        Module moduleSave = moduleRepository.save(module);
+        if (moduleSave == null) {
+            throw new IsjException("Un problème est survenu lors de l'enregistrement, veuillez réessayer plus tard", Status.INTERNAL_SERVER_ERROR);
+        }
+        return moduleSave.getCode().intValue();
+
+    }
+
+    @Override
+    public int updateModule (Module module) throws IsjException {
+        Utilisateur createur = utilisateurRepository.findById(module.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
         Utilisateur modificateur = utilisateurRepository.findById(module.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
         module.setCreateur(createur);
         module.setModificateur(modificateur);
-
-        return moduleRepository.save(module).getCode().intValue();
+        Module moduleUpdate = moduleRepository.save(module);
+        if (moduleUpdate == null) {
+            throw new IsjException("Un problème est survenu lors de la mise à jour, veuillez réessayer plus tard", Status.INTERNAL_SERVER_ERROR);
+        }
+        return moduleUpdate.getCode().intValue();
     }
 
     @Override
