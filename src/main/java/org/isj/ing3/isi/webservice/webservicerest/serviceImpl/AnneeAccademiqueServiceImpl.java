@@ -24,13 +24,13 @@ public class AnneeAccademiqueServiceImpl implements IAnneeAcademique {
 
 
     @Override
-    public AnneeAcademique saveAnneeAcademique(AnneeAcademique annee_academique) throws IsjException {
-        Utilisateur createur = utilisateurRepository.findById(annee_academique.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
-        Utilisateur modificateur = utilisateurRepository.findById(annee_academique.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
+    public AnneeAcademique saveAnneeAcademique(AnneeAcademique anneeAcademique) throws IsjException {
+        Utilisateur createur = utilisateurRepository.findById(anneeAcademique.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
+        Utilisateur modificateur = utilisateurRepository.findById(anneeAcademique.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
 
-        annee_academique.setCreateur(createur);
-        annee_academique.setModificateur(modificateur);
-        return anneeAcademiqueRepository.save(annee_academique);
+        anneeAcademique.setCreateur(createur);
+        anneeAcademique.setModificateur(modificateur);
+        return anneeAcademiqueRepository.save(anneeAcademique);
     }
 
     @Override

@@ -27,7 +27,7 @@ public class FiliereImpl implements IFiliere {
     @Override
     public int saveFiliere(Filiere filiere) throws IsjException {
         Utilisateur createur = utilisateurRepository.findById(filiere.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-        Utilisateur modificateur = createur;
+        Utilisateur modificateur = utilisateurRepository.findById(filiere.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
         filiere.setCreateur(createur);
         filiere.setModificateur(modificateur);
         Filiere filiereSave = filiereRepository.save(filiere);
@@ -46,19 +46,6 @@ public class FiliereImpl implements IFiliere {
     public int deleteFiliere(Long code) {
         filiereRepository.deleteById(filiereRepository.findById(code).get().getCode());
         return 1;
-    }
-
-    @Override
-    public int updateFiliere (Filiere filiere) throws IsjException {
-        Utilisateur createur = utilisateurRepository.findById(filiere.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-        Utilisateur modificateur = utilisateurRepository.findById(filiere.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-        filiere.setCreateur(createur);
-        filiere.setModificateur(modificateur);
-        Filiere filiereUpdate = filiereRepository.save(filiere);
-        if (filiereUpdate == null) {
-            throw new IsjException("Un problème est survenu lors de la mise à jour, veuillez réessayer plus tard", Status.INTERNAL_SERVER_ERROR);
-        }
-        return filiereUpdate.getCode().intValue();
     }
 
     @Override

@@ -4,8 +4,6 @@ package org.isj.ing3.isi.webservice.webservicerest.model.entities;
  * importation des classes
  */
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.isj.ing3.isi.webservice.webservicerest.utils.enumaration.StatutSession;
 
 import lombok.AllArgsConstructor;
@@ -26,7 +24,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @Data
 @Entity
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 
 @Table(name = "session")
 
@@ -35,11 +32,11 @@ public class Session extends Securite implements Serializable {
 
     @Column(name = "date_connection")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateConnection = new Date();
+    private Date dateConnection;
 
     @Column(name = "date_deconnection")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateDeconnection = new Date();
+    private Date dateDeconnection;
 
     @ManyToOne
     @JoinColumn(name = "utilisateur")

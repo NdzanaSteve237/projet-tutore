@@ -1,16 +1,11 @@
 package org.isj.ing3.isi.webservice.webservicerest.presentation.api;
 
-import org.isj.ing3.isi.webservice.webservicerest.model.modeletat.AttestationEtDiplome;
-import org.isj.ing3.isi.webservice.webservicerest.model.modeletat.CarteEtudiant;
-import org.isj.ing3.isi.webservice.webservicerest.model.modeletat.FicheAbsence;
-import org.isj.ing3.isi.webservice.webservicerest.model.modeletat.Pv;
 import org.isj.ing3.isi.webservice.webservicerest.service.IEtudiant;
 import org.isj.ing3.isi.webservice.webservicerest.service.IPrintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,18 +18,18 @@ public class PrintController {
     private IPrintService iPrintService;
 
     @GetMapping("/generatecarteetudiant")
-    public ResponseEntity<?> generateCarteEtudiant(@RequestBody CarteEtudiant carteEtudiant) throws Exception {
+    public ResponseEntity<?> generateCarteEtudiant() throws Exception {
         try {
-            return new ResponseEntity<byte[]>(iPrintService.generateCarteEtudiant(carteEtudiant), HttpStatus.CREATED);
+            return new ResponseEntity<byte[]>(iPrintService.generateCarteEtudiant(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.CREATED);
         }
     }
 
     @GetMapping("/generateatestation")
-    public ResponseEntity<?> generateAttestation(@RequestBody AttestationEtDiplome attestation) throws Exception {
+    public ResponseEntity<?> generateAttestation() throws Exception {
         try {
-            return new ResponseEntity<byte[]>(iPrintService.generateAttestationReusite(attestation), HttpStatus.CREATED);
+            return new ResponseEntity<byte[]>(iPrintService.generateAttestationReusite(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.CREATED);
         }
@@ -42,28 +37,28 @@ public class PrintController {
 
 
     @GetMapping("/generatediplome")
-    public ResponseEntity<?> generateDiplome(@RequestBody AttestationEtDiplome diplome) throws Exception {
+    public ResponseEntity<?> generateDiplome() throws Exception {
 
         try {
-            return new ResponseEntity<byte[]>(iPrintService.generateDiplome(diplome), HttpStatus.CREATED);
+            return new ResponseEntity<byte[]>(iPrintService.generateDiplome(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.CREATED);
         }
     }
 
     @GetMapping("/generateficheabsence")
-    public ResponseEntity<?> generateFicheAbsence(@RequestBody FicheAbsence ficheAbsence) throws Exception {
+    public ResponseEntity<?> generateFicheAbsence() throws Exception {
         try {
-            return new ResponseEntity<byte[]>(iPrintService.generateFicheAbsences(ficheAbsence), HttpStatus.CREATED);
+            return new ResponseEntity<byte[]>(iPrintService.generateFicheAbsences(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.CREATED);
         }
     }
 
     @GetMapping("/generatePv")
-    public ResponseEntity<?> generatePv(@RequestBody Pv pv) throws Exception {
+    public ResponseEntity<?> generatePv() throws Exception {
         try {
-            return new ResponseEntity<byte[]>(iPrintService.generatePv(pv), HttpStatus.CREATED);
+            return new ResponseEntity<byte[]>(iPrintService.generatePv(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.CREATED);
         }

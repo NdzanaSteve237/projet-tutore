@@ -44,6 +44,11 @@ public class EtudiantRestController {
         return iEtudiant.deleteEtudiant(code);
     }
 
+    @GetMapping("/generatecarteetudiant")
+    public void generate() throws Exception {
+        iPrintService.generateCarteEtudiant();
+    }
+
     @SneakyThrows
     @GetMapping("/get/{matricule}")
     public ResponseEntity<Etudiant> getEtudiantByMatricule(@PathVariable("matricule") String matricule) throws IsjException {

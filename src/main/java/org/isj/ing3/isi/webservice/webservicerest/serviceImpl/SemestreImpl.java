@@ -11,11 +11,9 @@ import org.isj.ing3.isi.webservice.webservicerest.service.ISemestre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional
 @Service
 public class SemestreImpl implements ISemestre {
 
@@ -25,9 +23,10 @@ public class SemestreImpl implements ISemestre {
     UtilisateurRepository utilisateurRepository;
 
     @Override
-    public Long saveSemestre(Semestre semestre) throws IsjException {
-        Utilisateur createur = utilisateurRepository.findById(semestre.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-        Utilisateur modificateur = createur;
+    public Long saveSemestre(Semestre semestre) {
+        Utilisateur createur = utilisateurRepository.findById(semestre.getCreateur().getCode()).get();
+        Utilisateur modificateur = utilisateurRepository.findById(semestre.getCreateur().getCode()).get();
+
         semestre.setCreateur(createur);
         semestre.setModificateur(modificateur);
         return semestreRepository.save(semestre).getCode();
@@ -47,15 +46,5 @@ public class SemestreImpl implements ISemestre {
     @Override
     public Semestre searchSemestreByLibelleOrAnneeAcademique(String libelle, AnneeAcademique annee_academique) {
         return semestreRepository.retrouverSemestre(libelle,annee_academique);
-    }
-
-    @Override
-    public Long updateSemestre(Semestre semestre) throws IsjException {
-        Utilisateur createur = utilisateurRepository.findById(semestre.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-        Utilisateur modificateur = utilisateurRepository.findById(semestre.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
-
-        semestre.setCreateur(createur);
-        semestre.setModificateur(modificateur);
-        return semestreRepository.save(semestre).getCode();
     }
 }
