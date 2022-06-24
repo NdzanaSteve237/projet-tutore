@@ -2,7 +2,6 @@ package org.isj.ing3.isi.webservice.webservicerest.serviceImpl;
 
 import org.isj.ing3.isi.webservice.webservicerest.exception.ErrorInfo;
 import org.isj.ing3.isi.webservice.webservicerest.exception.IsjException;
-import org.isj.ing3.isi.webservice.webservicerest.model.entities.Module;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.UE;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Utilisateur;
 import org.isj.ing3.isi.webservice.webservicerest.repositories.UERepository;

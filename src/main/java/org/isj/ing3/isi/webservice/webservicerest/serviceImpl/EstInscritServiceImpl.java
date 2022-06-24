@@ -3,7 +3,6 @@ package org.isj.ing3.isi.webservice.webservicerest.serviceImpl;
 import org.isj.ing3.isi.webservice.webservicerest.exception.ErrorInfo;
 import org.isj.ing3.isi.webservice.webservicerest.exception.IsjException;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.EstInscrit;
-import org.isj.ing3.isi.webservice.webservicerest.model.entities.Filiere;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Utilisateur;
 import org.isj.ing3.isi.webservice.webservicerest.repositories.EstInscritRepository;
 import org.isj.ing3.isi.webservice.webservicerest.repositories.UtilisateurRepository;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EstInscritServiceImpl implements IEstInscrit {

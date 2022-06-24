@@ -3,7 +3,6 @@ package org.isj.ing3.isi.webservice.webservicerest.utils.printpdfclass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
 @NoArgsConstructor

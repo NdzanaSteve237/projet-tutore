@@ -4,10 +4,10 @@ package org.isj.ing3.isi.webservice.webservicerest.model.entities;
  * importation des classes
  */
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import net.bytebuddy.implementation.bind.annotation.Default;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,7 +27,7 @@ import java.util.Objects;
         @UniqueConstraint(columnNames = {"candidat_inscrit", "enseignement"})
 })
 @AllArgsConstructor
-
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 public class EstInscrit extends Securite implements Serializable {
 
     public EstInscrit() {

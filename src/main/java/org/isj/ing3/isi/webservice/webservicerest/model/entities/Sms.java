@@ -3,10 +3,10 @@ package org.isj.ing3.isi.webservice.webservicerest.model.entities;
 /**
  * importation des classes
  */
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.isj.ing3.isi.webservice.webservicerest.model.entities.Message;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -23,6 +23,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Data
 @Entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 
 @Table(name = "sms")
 public class Sms extends Message implements Serializable {

@@ -20,6 +20,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @MappedSuperclass
+
 public class Personne extends Securite {
 
     @Column(name = "nom", nullable = false)

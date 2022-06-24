@@ -5,7 +5,9 @@ import org.isj.ing3.isi.webservice.webservicerest.exception.IsjException;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Candidat;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Classe;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Utilisateur;
-import org.isj.ing3.isi.webservice.webservicerest.repositories.*;
+import org.isj.ing3.isi.webservice.webservicerest.repositories.CandidatRepository;
+import org.isj.ing3.isi.webservice.webservicerest.repositories.ClasseRepository;
+import org.isj.ing3.isi.webservice.webservicerest.repositories.UtilisateurRepository;
 import org.isj.ing3.isi.webservice.webservicerest.service.ICandidat;
 import org.isj.ing3.isi.webservice.webservicerest.service.IClasse;
 import org.isj.ing3.isi.webservice.webservicerest.utils.CHeckNull;
@@ -13,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CandidatServiceImpl implements ICandidat {
@@ -31,9 +32,9 @@ public class CandidatServiceImpl implements ICandidat {
 
         CHeckNull.checkStringIsNull(candidat.getEmail());
         checkEmailsAlreadyUsed(candidat.getEmail());
-        Utilisateur createur = utilisateurRepository.findById(candidat.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
-        Utilisateur modificateur = utilisateurRepository.findById(candidat.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
-        Classe classe = classeRepository.findById(candidat.getClasse().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
+        Utilisateur createur = utilisateurRepository.findById(candidat.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
+        Utilisateur modificateur = createur;
+        Classe classe = classeRepository.findById(candidat.getClasse().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
         candidat.setClasse(classe);
         candidat.setCreateur(createur);
         candidat.setModificateur(modificateur);
@@ -60,6 +61,24 @@ public class CandidatServiceImpl implements ICandidat {
     @Override
     public void deleteByEmail(String email) {
 
+    }
+
+    @Override
+    public Candidat searchCandidatBytelephone(int telephone) throws IsjException {
+        return candidatRepository.retrouverCandidatSms(telephone);
+    }
+
+    @Override
+    public int updateCandidat(Candidat candidat) throws IsjException {
+        CHeckNull.checkStringIsNull(candidat.getEmail());
+        checkEmailsAlreadyUsed(candidat.getEmail());
+        Utilisateur createur = utilisateurRepository.findById(candidat.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
+        Utilisateur modificateur = utilisateurRepository.findById(candidat.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
+        Classe classe = classeRepository.findById(candidat.getClasse().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));;
+        candidat.setClasse(classe);
+        candidat.setCreateur(createur);
+        candidat.setModificateur(modificateur);
+        return candidatRepository.save(candidat).getCode().intValue();
     }
 
     private void checkEmailsAlreadyUsed(String email) throws IsjException {

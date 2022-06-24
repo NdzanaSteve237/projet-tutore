@@ -6,14 +6,15 @@ import org.isj.ing3.isi.webservice.webservicerest.model.entities.Discipline;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Etudiant;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Semestre;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Utilisateur;
-import org.isj.ing3.isi.webservice.webservicerest.repositories.*;
-import org.isj.ing3.isi.webservice.webservicerest.service.IClasse;
+import org.isj.ing3.isi.webservice.webservicerest.repositories.DisciplineRepository;
+import org.isj.ing3.isi.webservice.webservicerest.repositories.EtudiantRepository;
+import org.isj.ing3.isi.webservice.webservicerest.repositories.SemestreRepository;
+import org.isj.ing3.isi.webservice.webservicerest.repositories.UtilisateurRepository;
 import org.isj.ing3.isi.webservice.webservicerest.service.IDiscipline;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DisciplineServiceImpl implements IDiscipline {

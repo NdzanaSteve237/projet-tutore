@@ -3,6 +3,8 @@ package org.isj.ing3.isi.webservice.webservicerest.model.entities;
  * importation des classes
  */
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,9 +13,7 @@ import org.isj.ing3.isi.webservice.webservicerest.utils.enumaration.Statut;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -26,7 +26,9 @@ import java.util.Objects;
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 @Table(name = "candidat")
+
 public class Candidat extends Personne implements Serializable {
 
     @Column(name = "nom_de_la_mere")

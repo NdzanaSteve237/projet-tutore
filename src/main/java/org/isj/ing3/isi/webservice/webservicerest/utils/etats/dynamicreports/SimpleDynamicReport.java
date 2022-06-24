@@ -20,7 +20,6 @@ import org.isj.ing3.isi.webservice.webservicerest.model.entities.Etudiant;
 import org.isj.ing3.isi.webservice.webservicerest.serviceImpl.EtudiantServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
 import java.awt.*;
 import java.io.File;
 import java.text.SimpleDateFormat;

@@ -5,14 +5,14 @@ import org.isj.ing3.isi.webservice.webservicerest.exception.IsjException;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Droit;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Role;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Utilisateur;
-import org.isj.ing3.isi.webservice.webservicerest.repositories.*;
-import org.isj.ing3.isi.webservice.webservicerest.service.IDiscipline;
+import org.isj.ing3.isi.webservice.webservicerest.repositories.DroitRepository;
+import org.isj.ing3.isi.webservice.webservicerest.repositories.RoleRepository;
+import org.isj.ing3.isi.webservice.webservicerest.repositories.UtilisateurRepository;
 import org.isj.ing3.isi.webservice.webservicerest.service.IDroit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DroitServiceImpl implements IDroit {

@@ -3,14 +3,12 @@ package org.isj.ing3.isi.webservice.webservicerest.serviceImpl;
 import org.isj.ing3.isi.webservice.webservicerest.exception.ErrorInfo;
 import org.isj.ing3.isi.webservice.webservicerest.exception.IsjException;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Email;
-import org.isj.ing3.isi.webservice.webservicerest.repositories.*;
-import org.isj.ing3.isi.webservice.webservicerest.service.IDroit;
+import org.isj.ing3.isi.webservice.webservicerest.repositories.EmailRepository;
 import org.isj.ing3.isi.webservice.webservicerest.service.IEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EmailServiceImpl implements IEmail {

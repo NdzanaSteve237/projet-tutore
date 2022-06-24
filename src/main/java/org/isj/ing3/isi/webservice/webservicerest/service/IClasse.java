@@ -9,6 +9,8 @@ public interface IClasse {
 
     int saveClasse (Classe classe) throws IsjException;
     List<Classe> listClasses();
-    int deleteClass(Long code);
+    int deleteClass(Long code) throws IsjException;
     Classe getClasseByCode(Long code) throws IsjException;
+    Classe searchClasseBylibClasse(String libClasse) throws IsjException;
+    int updateClasse (Classe classe) throws IsjException;
 }

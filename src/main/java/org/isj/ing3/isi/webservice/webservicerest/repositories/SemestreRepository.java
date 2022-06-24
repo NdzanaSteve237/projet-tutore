@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface SemestreRepository extends JpaRepository<Semestre, Long> {
     @Query(value = "SELECT * FROM Semestre s WHERE s.libelle=:libelle AND s.annee_academique=:anneeacademique",nativeQuery = true)
     public Semestre retrouverSemestre(@Param("libelle")String libelle, @Param("anneeacademique") AnneeAcademique annee_academique);
+
 }

@@ -5,7 +5,6 @@ package org.isj.ing3.isi.webservice.webservicerest.model.entities;
  */
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import org.isj.ing3.isi.webservice.webservicerest.utils.enumaration.StatutVie;
 
@@ -19,6 +18,7 @@ import java.util.Date;
  */
 @Data
 @MappedSuperclass
+
 public class Securite {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,7 +39,6 @@ public class Securite {
     @Enumerated(EnumType.STRING)
     private StatutVie statutVie;
 
-    @JsonBackReference
     @JoinColumn(name = "createur", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private Utilisateur createur;

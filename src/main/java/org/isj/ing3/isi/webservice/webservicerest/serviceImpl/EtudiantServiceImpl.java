@@ -3,19 +3,14 @@ package org.isj.ing3.isi.webservice.webservicerest.serviceImpl;
 import org.isj.ing3.isi.webservice.webservicerest.exception.ErrorInfo;
 import org.isj.ing3.isi.webservice.webservicerest.exception.IsjException;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Etudiant;
-import org.isj.ing3.isi.webservice.webservicerest.model.entities.Filiere;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Utilisateur;
 import org.isj.ing3.isi.webservice.webservicerest.repositories.EtudiantRepository;
 import org.isj.ing3.isi.webservice.webservicerest.repositories.UtilisateurRepository;
 import org.isj.ing3.isi.webservice.webservicerest.service.IEtudiant;
-import org.isj.ing3.isi.webservice.webservicerest.service.IPrintService;
-import org.isj.ing3.isi.webservice.webservicerest.utils.etats.GeneratePDF;
-import org.isj.ing3.isi.webservice.webservicerest.utils.printpdfclass.CarteEtudiant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EtudiantServiceImpl implements IEtudiant {

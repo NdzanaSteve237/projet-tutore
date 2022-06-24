@@ -11,9 +11,10 @@ import org.isj.ing3.isi.webservice.webservicerest.service.IRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Transactional
 @Service
 public class RoleImpl implements IRole {
     @Autowired
@@ -22,10 +23,9 @@ public class RoleImpl implements IRole {
     UtilisateurRepository utilisateurRepository;
 
     @Override
-    public Long saveRole(Role role) {
-        Utilisateur createur = utilisateurRepository.findById(role.getCreateur().getCode()).get();
-        Utilisateur modificateur = utilisateurRepository.findById(role.getCreateur().getCode()).get();
-
+    public Long saveRole(Role role) throws IsjException {
+        Utilisateur createur = utilisateurRepository.findById(role.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
+        Utilisateur modificateur = createur;
         role.setCreateur(createur);
         role.setModificateur(modificateur);
 
@@ -39,7 +39,22 @@ public class RoleImpl implements IRole {
 
     @Override
     public int deleteRoleByCode(Long code) throws IsjException {
-        roleRepository.deleteById(roleRepository.findById(code).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND)).getCode());
+        roleRepository.deleteById(getRoleByCode(code).getCode());
         return 1;
+    }
+
+    @Override
+    public Long updateRole(Role role) throws IsjException {
+        Utilisateur createur = utilisateurRepository.findById(role.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
+        Utilisateur modificateur = utilisateurRepository.findById(role.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
+
+        role.setCreateur(createur);
+        role.setModificateur(modificateur);
+        return roleRepository.save(role).getCode();
+    }
+
+    @Override
+    public Role getRoleByCode(Long code) throws IsjException {
+        return roleRepository.findById(code).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
     }
 }

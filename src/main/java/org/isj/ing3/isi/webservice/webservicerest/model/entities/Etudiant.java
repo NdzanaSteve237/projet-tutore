@@ -5,17 +5,19 @@ package org.isj.ing3.isi.webservice.webservicerest.model.entities;
  */
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.isj.ing3.isi.webservice.webservicerest.utils.enumaration.Sexe;
 import org.isj.ing3.isi.webservice.webservicerest.utils.enumaration.Statut;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -27,7 +29,9 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 @Table(name = "etudiant")
+
 public class Etudiant extends Candidat implements Serializable {
 
     @Column(name = "matricule",unique=true,nullable = false)

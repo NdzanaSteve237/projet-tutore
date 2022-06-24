@@ -4,14 +4,13 @@ package org.isj.ing3.isi.webservice.webservicerest.model.entities;
 /**
  * importation des classes
  */
-import org.isj.ing3.isi.webservice.webservicerest.model.entities.Enseignement;
-import org.isj.ing3.isi.webservice.webservicerest.model.entities.Evaluation;
-import org.isj.ing3.isi.webservice.webservicerest.model.entities.Securite;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -21,6 +20,9 @@ import java.util.Objects;
  */
 
 @Entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@NoArgsConstructor
 @Table(name ="type_evaluation")
 
 
@@ -39,25 +41,6 @@ public class TypeEvaluation extends Securite implements Serializable {
     public TypeEvaluation(String libelle, String description, float pourcentage, Enseignement enseignement) {
         super(libelle, description);
         this.pourcentage = pourcentage;
-        this.enseignement = enseignement;
-    }
-
-    public TypeEvaluation() {
-    }
-
-    public float getPourcentage() {
-        return pourcentage;
-    }
-
-    public void setPourcentage(float pourcentage) {
-        this.pourcentage = pourcentage;
-    }
-
-    public Enseignement getEnseignement() {
-        return enseignement;
-    }
-
-    public void setEnseignement(Enseignement enseignement) {
         this.enseignement = enseignement;
     }
 

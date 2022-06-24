@@ -17,29 +17,29 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.util.Matrix;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.isj.ing3.isi.webservice.webservicerest.model.entities.*;
+import org.isj.ing3.isi.webservice.webservicerest.model.entities.Candidat;
+import org.isj.ing3.isi.webservice.webservicerest.model.entities.Etudiant;
 import org.isj.ing3.isi.webservice.webservicerest.model.entities.Note;
 import org.isj.ing3.isi.webservice.webservicerest.service.IEtudiant;
 import org.isj.ing3.isi.webservice.webservicerest.serviceImpl.EtudiantServiceImpl;
 import org.isj.ing3.isi.webservice.webservicerest.utils.Bd;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.plugin.javascript.navig.Array;
 
-
-import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.*;
 
 /**

@@ -7,8 +7,9 @@ import java.util.List;
 
 public interface IMessage {
 
-    int saveMessage (Message messageDto) throws IsjException;
+    int saveMessage (Message message) throws IsjException;
     List<Message> listMessages();
     int deleteMessage(Long code) throws IsjException;
+    int updateMessage (Message message) throws IsjException;
     Message getMessageByCode(Long code) throws IsjException;
 }

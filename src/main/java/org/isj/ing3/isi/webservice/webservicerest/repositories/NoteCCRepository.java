@@ -12,4 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface NoteCCRepository extends JpaRepository<NoteCC, Long> {
     @Query(value = "SELECT * FROM NoteCC n WHERE n.candidat=:candidats AND n.typeNoteCC=:typeNoteCCs",nativeQuery = true)
     public NoteCC retrouverNoteCC(@Param("candidats")Candidat candidat,@Param("typeNoteCCs") TypeNoteCC typeNoteCC);
+
+
 }

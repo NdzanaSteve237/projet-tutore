@@ -9,10 +9,12 @@ import org.isj.ing3.isi.webservice.webservicerest.repositories.UtilisateurReposi
 import org.isj.ing3.isi.webservice.webservicerest.service.ISession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.zalando.problem.Status;
 
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Transactional
 @Service
 public class SessionImpl implements ISession {
     @Autowired
@@ -21,13 +23,13 @@ public class SessionImpl implements ISession {
     UtilisateurRepository utilisateurRepository;
 
     @Override
-    public Long saveSession(Session session) {
-        Utilisateur createur = utilisateurRepository.findById(session.getCreateur().getCode()).get();
-        Utilisateur modificateur = utilisateurRepository.findById(session.getCreateur().getCode()).get();
+    public Session saveSession(Session session) throws IsjException {
+        Utilisateur createur = utilisateurRepository.findById(session.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
+        Utilisateur modificateur = createur;
 
         session.setCreateur(createur);
         session.setModificateur(modificateur);
-        return sessionRepository.save(session).getCode();
+        return sessionRepository.save(session);
     }
 
     @Override
@@ -40,4 +42,21 @@ public class SessionImpl implements ISession {
         sessionRepository.deleteById(sessionRepository.findById(code).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND)).getCode());
         return 1;
     }
+
+    @Override
+    public Long updateSession(Session session) throws IsjException {
+        Utilisateur createur = utilisateurRepository.findById(session.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
+        Utilisateur modificateur = utilisateurRepository.findById(session.getCreateur().getCode()).orElseThrow(() -> new IsjException(ErrorInfo.RESSOURCE_NOT_FOUND));
+
+        session.setCreateur(createur);
+        session.setModificateur(modificateur);
+        return sessionRepository.save(session).getCode();
+    }
+
+    @Override
+    public Session findLastSessionUser(Utilisateur utilisateur) throws IsjException {
+        return sessionRepository.getLastSessionUser(utilisateur).orElseThrow(() -> new IsjException("Aucune session retrouvée", Status.NOT_FOUND));
+    }
+
+
 }
